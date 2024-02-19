@@ -14,6 +14,19 @@ abstract class Model
 {
     // ?string nullable convatation  ommited
     protected  $table;
+
+    private function getTable(): string
+    {
+        // check if table is not null
+        if ($this->table !== null) {
+        return $this->table;
+        }
+        
+        // get the child class
+       $path = explode("\\", $this::class);
+       
+      return strtolower(array_pop($path));
+    }
     
     // model dependens ob database object
     public function __construct(private Database $database)
@@ -25,7 +38,7 @@ abstract class Model
 
         $pdo = $this->database->getConnection();
         
-        $sql = "SELECT * FROM {$this->table}";
+        $sql = "SELECT * FROM {$this->getTable()}";
         
         // get data from the database
         $stmt = $pdo->query($sql);
@@ -38,7 +51,7 @@ abstract class Model
     {
         $conn = $this->database->getConnection();
         
-        $sql = "SELECT * FROM {$this->table} WHERE id = :id";
+        $sql = "SELECT * FROM {$this->getTable()} WHERE id = :id";
 
         $stmt = $conn->prepare($sql);
 
