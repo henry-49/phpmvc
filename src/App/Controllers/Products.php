@@ -89,7 +89,7 @@ class Products
 
         if ($this->model->insert($data)){
             
-            echo "record successfully created.";
+            echo "record successfully created. ", $this->model->getInsertID();
             
         }else{
 
