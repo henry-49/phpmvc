@@ -15,6 +15,21 @@ abstract class Model
     // ?string nullable convatation  ommited
     protected  $table;
 
+    protected $errors = [];
+
+    protected function validate(array $data): void
+    {   
+    }
+    protected function addError(string $field, string $message): void
+    {
+        $this->errors[$field] = $message;
+    }
+
+    public function getErrors(): array
+    {
+        return $this->errors;
+    }
+    
     private function getTable(): string
     {
         // check if table is not null
@@ -66,7 +81,9 @@ abstract class Model
     public function insert(array $data): bool
     {
         // prevent empty record to database
-       if (! $this->validate($data)) {
+        $this->validate($data);
+        
+       if (! empty($this->errors)) {
             return false;
        };
         
