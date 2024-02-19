@@ -22,7 +22,7 @@ class Products
 
        // $model = new Product;
 
-        $products = $this->model->getDate();
+        $products = $this->model->findAll();
 
         //$viewer = new Viewer;
 
