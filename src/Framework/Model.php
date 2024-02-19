@@ -65,6 +65,11 @@ abstract class Model
 
     public function insert(array $data): bool
     {
+        // prevent empty record to database
+       if (! $this->validate($data)) {
+            return false;
+       };
+        
         $columns = implode(", ", array_keys($data));
 
         $placeholders = implode(", ", array_fill(0, count($data), "?"));
