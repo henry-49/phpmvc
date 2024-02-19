@@ -1,0 +1,16 @@
+<h1>New Product</h1>
+
+<form method="post">
+    <label for="name">Name</label>
+    <input type="text" name="name" id="name" />
+
+    <label for="description">Description</label>
+    <textarea name="description" id="description" rows="3"></textarea>
+
+    <button type="submit">Save</button>
+</form>
+
+
+</body>
+
+</html>

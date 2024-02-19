@@ -1,12 +1,15 @@
-<h1>Products</h1namespace"]?< /h1>
-    <?php foreach ($products as $product) : ?>
+<h1>Products</h1>
 
-    <h2>
-        <a href="/products/<?=$product["id"] ?>/show">
-            <?= htmlspecialchars($product['name']); ?>
-        </a>
-    </h2>
-    <?php endforeach; ?>
-    </body>
+<a href="/products/new">New Product</a>
 
-    </html>
+<?php foreach ($products as $product) : ?>
+
+<h2>
+    <a href="/products/<?=$product["id"] ?>/show">
+        <?= htmlspecialchars($product['name']); ?>
+    </a>
+</h2>
+<?php endforeach; ?>
+</body>
+
+</html>
