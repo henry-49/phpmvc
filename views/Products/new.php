@@ -1,6 +1,6 @@
 <h1>New Product</h1>
 
-<form method="post">
+<form method="post" action="/products/create">
     <label for="name">Name</label>
     <input type="text" name="name" id="name" />
 
