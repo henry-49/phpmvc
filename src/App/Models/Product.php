@@ -9,5 +9,5 @@ use Framework\Model;
 // Product Model class
 class Product extends Model
 {
-        
+        protected $table = "product";
 }

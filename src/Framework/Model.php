@@ -8,10 +8,13 @@ use App\Database;
 use PDO;
 
 
-// Product Model class
+// Base Model class
 // make it abstract as we won't be creating any objects from the class
 abstract class Model 
 {
+    // ?string nullable convatation  ommited
+    protected  $table;
+    
     // model dependens ob database object
     public function __construct(private Database $database)
     {
@@ -21,8 +24,11 @@ abstract class Model
     {
 
         $pdo = $this->database->getConnection();
+        
+        $sql = "SELECT * FROM {$this->table}";
+        
         // get data from the database
-        $stmt = $pdo->query("SELECT * FROM product");
+        $stmt = $pdo->query($sql);
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -32,7 +38,7 @@ abstract class Model
     {
         $conn = $this->database->getConnection();
         
-        $sql = "SELECT * FROM product WHERE id = :id";
+        $sql = "SELECT * FROM {$this->table} WHERE id = :id";
 
         $stmt = $conn->prepare($sql);
 
