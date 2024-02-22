@@ -17,6 +17,19 @@ abstract class Model
 
     protected $errors = [];
 
+    public function update($id, array $data): bool
+    {
+
+        // prevent empty record to database
+        $this->validate($data);
+
+        if (!empty($this->errors)) {
+            return false;
+        };
+
+        return true;
+    }
+
     protected function validate(array $data): void
     {   
     }

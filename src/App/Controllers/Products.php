@@ -53,7 +53,7 @@ class Products
        // $viewer = new Viewer;
 
         echo $this->viewer->render("shared/header.php", [
-            "title" => "Product"
+            "title" => "Show Product"
         ]);
         
         echo  $this->viewer->render("Products/show.php",
@@ -63,6 +63,33 @@ class Products
         );
     }
 
+    public function edit(string $id)
+    {
+        $product = $this->model->find($id);
+
+        if ($product === false) {
+
+            throw new PageNotFoundException("Product not found");
+        }
+
+        //var_dump($id);
+
+        //require "views/products_show.php";
+
+        // $viewer = new Viewer;
+
+        echo $this->viewer->render("shared/header.php", [
+            "title" => "Edit Product"
+        ]);
+
+        echo  $this->viewer->render(
+            "Products/edit.php",
+            [
+                "product" => $product
+            ]
+        );
+    }
+    
     public function showPage(string $title, string $id, string $page)
     {
         
@@ -99,9 +126,48 @@ class Products
             ]);
 
             echo  $this->viewer->render("Products/new.php", [
-                "errors" => $this->model->getErrors()
+                "errors" => $this->model->getErrors(),
+                "product" => $data
             ]);
         }
         
+    }
+
+
+    public function update(string $id)
+    {
+        $product = $this->model->find($id);
+
+        if ($product === false) {
+
+            throw new PageNotFoundException("Product not found");
+        }
+
+        /*  $data = [
+            "name" => $_POST["name"],
+            "description" => empty($_POST["description"]) ? null : $_POST["description"],
+        ]; */
+
+
+        $product["name"] = $_POST["name"];
+        $product["description"] = empty($_POST["description"]) ? null : $_POST["description"];
+        
+
+        if ($this->model->update($id, $product)) {
+
+            header("Location: /products/{$id}/show");
+            exit;
+            
+        } else {
+
+            echo $this->viewer->render("shared/header.php", [
+                "title" => "Edit Product"
+            ]);
+
+            echo  $this->viewer->render("Products/edit.php", [
+                "errors" => $this->model->getErrors(),
+                "product" => $product
+            ]);
+        }
     }
 }
