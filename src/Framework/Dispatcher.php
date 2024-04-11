@@ -14,16 +14,16 @@ class Dispatcher
     { 
     }
 
-    public function handle(string $path)
+    public function handle(string $path, string $method)
     {
-        $params = $this->router->match($path);
+        $params = $this->router->match($path, $method);
         // var_dump($params);
         // exit;
 
         // print_r($params);
 
         if ($params === false) {
-            throw new PageNotFoundException("No route matched for '$path'");
+            throw new PageNotFoundException("No route matched for '$path' with method '$method'");
         }
 
         // $segments = explode("/", $path);

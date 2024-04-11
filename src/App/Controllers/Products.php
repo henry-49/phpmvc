@@ -178,6 +178,7 @@ class Products
             
             // redirect after delete
             header("Location: /products/index");
+            exit;
         }
 
         echo $this->viewer->render("shared/header.php", [
@@ -185,8 +186,19 @@ class Products
         ]);
         
         echo  $this->viewer->render("Products/delete.php", [
-            "errors" => $this->model->getErrors(),
             "product" => $product
         ]);
+    }
+
+    public function destroy(string $id) 
+    {
+        $product = $this->getProduct($id);
+
+            $this->model->delete($id);
+
+            // redirect after delete
+            header("Location: /products/index");
+            exit;
+        
     }
 }

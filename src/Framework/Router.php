@@ -14,7 +14,7 @@ class Router
         ];
     }
 
-    public function match(string $path): array|bool
+    public function match(string $path, string $method): array|bool
     {
         $path = urldecode($path);
         
@@ -35,6 +35,14 @@ class Router
                 $matches = array_filter($matches, "is_string", ARRAY_FILTER_USE_KEY);
 
                 $params = array_merge($matches, $route["params"]);
+
+                if (array_key_exists("method", $params)) {
+                    
+                    if(strtolower($method) !== strtolower($params["method"])) {
+                        
+                        continue;
+                    }
+                }
 
                 return $params;
                 
