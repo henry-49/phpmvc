@@ -106,7 +106,7 @@ abstract class Model
     }
     
     // model dependens on database object
-    public function __construct(private Database $database)
+    public function __construct(protected Database $database)
     {
     }
     
