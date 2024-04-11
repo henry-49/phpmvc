@@ -39,13 +39,8 @@ class Products
 
     public function show(string $id)
     {
-        $product = $this->model->find($id);
+        $product = $this->getProduct($id);
 
-        if ($product === false) {
-
-            throw new PageNotFoundException("Product not found");
-        }
-        
         //var_dump($id);
 
         //require "views/products_show.php";
@@ -63,7 +58,7 @@ class Products
         );
     }
 
-    public function edit(string $id)
+    private function getProduct(string $id): array
     {
         $product = $this->model->find($id);
 
@@ -71,6 +66,13 @@ class Products
 
             throw new PageNotFoundException("Product not found");
         }
+
+        return $product;
+    }
+    
+    public function edit(string $id)
+    {
+        $product = $this->getProduct($id);
 
         //var_dump($id);
 
@@ -133,15 +135,9 @@ class Products
         
     }
 
-
     public function update(string $id)
     {
-        $product = $this->model->find($id);
-
-        if ($product === false) {
-
-            throw new PageNotFoundException("Product not found");
-        }
+        $product = $this->getProduct($id);
 
         /*  $data = [
             "name" => $_POST["name"],
@@ -169,5 +165,27 @@ class Products
                 "product" => $product
             ]);
         }
+    }
+
+    public function delete(String $id) 
+    {
+        $product = $this->getProduct($id);
+
+        if ($_SERVER['REQUEST_METHOD'] === "POST") {
+            
+            $this->model->delete($id);
+            
+            // redirect after delete
+            header("Location: /products/index");
+        }
+
+        echo $this->viewer->render("shared/header.php", [
+            "title" => "Delete Product"
+        ]);
+        
+        echo  $this->viewer->render("Products/delete.php", [
+            "errors" => $this->model->getErrors(),
+            "product" => $product
+        ]);
     }
 }

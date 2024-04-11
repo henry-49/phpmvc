@@ -20,6 +20,9 @@ abstract class Model
     public function update($id, array $data): bool
     {
 
+        // remove id in the array elements be processing the data
+        unset($data['id']);
+        
         // prevent empty record to database
         $this->validate($data);
 
@@ -27,7 +30,45 @@ abstract class Model
             return false;
         };
 
-        return true;
+
+        $sql = "UPDATE {$this->getTable()}";
+
+      // get an array of the column names from data using array key function
+      // & is use to passed argument by reference
+        $assignments = array_keys($data);
+        array_walk($assignments, function(&$value) { 
+            $value = "$value = ?";
+        });
+
+        $sql .= " SET " . implode(",", $assignments);
+        
+        $sql .= " WHERE id = ?";
+
+        $conn = $this->database->getConnection();
+
+        $stmt = $conn->prepare($sql);
+
+        $i = 1;
+
+        foreach ($data as $value) {
+
+            $type = match (gettype($value)) {
+                    "boolean" => PDO::PARAM_BOOL,
+                    "integer" => PDO::PARAM_INT,
+                    "NULL" => PDO::PARAM_NULL,
+                    default => PDO::PARAM_STR
+                };
+
+            $stmt->bindValue($i++, $value, $type);
+        }
+        
+        // bind values for id
+        $stmt->bindValue($i++, $id, PDO::PARAM_INT);
+        
+        return $stmt->execute();
+
+        // exit($sql);
+       // return true;
     }
 
     protected function validate(array $data): void
@@ -64,7 +105,7 @@ abstract class Model
       return strtolower(array_pop($path));
     }
     
-    // model dependens ob database object
+    // model dependens on database object
     public function __construct(private Database $database)
     {
     }
@@ -136,7 +177,19 @@ abstract class Model
         }
 
         return $stmt->execute();
+    }
 
-        
+    public function delete(string $id): bool
+    {
+        $sql = "DELETE FROM {$this->getTable()} 
+                WHERE id = :id";
+
+        $conn = $this->database->getConnection();
+
+        $stmt = $conn->prepare($sql);
+
+        $stmt->bindValue(":id", $id, PDO::PARAM_INT);
+
+        return $stmt->execute();
     }
 }
