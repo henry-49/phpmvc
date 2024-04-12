@@ -26,13 +26,6 @@ set_exception_handler("Framework\ErrorHandler::handleException");
 // test url rewriting
 //exit("Hello from Index.php");
 
-$path = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
-// exit($path);
-
-if ($path === false) {
-    throw new UnexpectedValueException("Malformed URL: '{$_SERVER['REQUEST_URI']}'");
-}
-
 
 // require "src/router.php";
 
@@ -45,4 +38,6 @@ $container = require ROOT_PATH . "/config/services.php";
 
 $dispatcher = new Framework\Dispatcher($router, $container);
 
-$dispatcher->handle($path, $_SERVER["REQUEST_METHOD"]);
+$request = new Framework\Request($_SERVER["REQUEST_URI"], $_SERVER["REQUEST_METHOD"]);
+
+$dispatcher->handle($request);
