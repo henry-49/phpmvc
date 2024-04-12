@@ -41,6 +41,7 @@ class Dispatcher
 
         //$action = $params["action"];
         $action = $this->getActionName($params);
+        
         $controller = $this->getControllerName($params); 
         //exit($action);
 
@@ -48,8 +49,9 @@ class Dispatcher
        // $controller_object = $this->getObject($controller);
         $controller_object = $this->container->get($controller);
 
-
         $controller_object->setRequest($request);
+        
+        $controller_object->setViewer($this->container->get(Viewer::class));
         
         // $controller = "App\Controllers\\" . ucwords($params["controller"]);
         // $action = $segments[2];

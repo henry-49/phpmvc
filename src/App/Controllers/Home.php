@@ -9,13 +9,12 @@ class Home extends Controller
 {
     public function index()
     {
-        $viewer = new Viewer;
 
-        echo $viewer->render("shared/header.php", [
+        echo $this->viewer->render("shared/header.php", [
             "title" => "Home",
         ]);
         
-        echo  $viewer->render("Home/index.php");
+        echo  $this->viewer->render("Home/index.php");
     
        // require "views/home_index.php";
     }

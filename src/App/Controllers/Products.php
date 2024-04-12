@@ -14,7 +14,7 @@ class Products extends Controller
 {
 
     // products depends on model object
-    public function __construct(private Viewer $viewer, private Product $model)
+    public function __construct(private Product $model)
     {
     }
 
