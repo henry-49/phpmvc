@@ -14,7 +14,13 @@ class Dispatcher
                                 private Container $container)
     { 
     }
-
+    
+    /**
+     * handle
+     *
+     * @param  Request $request
+     * @return void
+     */
     public function handle(Request $request)
     {
         $path = $this->getPath($request->uri);
