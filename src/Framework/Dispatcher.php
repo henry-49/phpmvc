@@ -41,6 +41,9 @@ class Dispatcher
         // create object from the controller class
        // $controller_object = $this->getObject($controller);
         $controller_object = $this->container->get($controller);
+
+
+        $controller_object->setRequest($request);
         
         // $controller = "App\Controllers\\" . ucwords($params["controller"]);
         // $action = $segments[2];
