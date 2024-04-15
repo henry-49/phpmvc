@@ -51,7 +51,7 @@ class Dispatcher
 
         $controller_object->setRequest($request);
         
-        $controller_object->setViewer($this->container->get(Viewer::class));
+        $controller_object->setViewer($this->container->get(PHPTemplateViewer::class));
         
         // $controller = "App\Controllers\\" . ucwords($params["controller"]);
         // $action = $segments[2];

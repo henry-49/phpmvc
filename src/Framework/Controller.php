@@ -12,7 +12,7 @@ abstract class Controller
     // we need to change its visibility to protected.
     protected Request $request;
 
-    protected Viewer $viewer;
+    protected PHPTemplateViewer $viewer;
     
     /**
      * setRequest
@@ -26,7 +26,7 @@ abstract class Controller
     }
 
     
-    public function setViewer(Viewer $viewer): void
+    public function setViewer(PHPTemplateViewer $viewer): void
     {
         $this->viewer = $viewer;
     }
