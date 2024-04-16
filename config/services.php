@@ -9,4 +9,11 @@ $container->set(App\Database::class, function () {
 });
 
 
+// By adding an entry to the containers registry for the interface, 
+// we've decoupled the dispatcher from a concrete class.
+$container->set(Framework\TemplateViewerInterface::class, function(){
+    // And inside the closure, we'll return a new object of the PHP Template Viewer class.
+    return new Framework\PHPTemplateViewer;
+});
+
 return $container;  

@@ -8,6 +8,7 @@ class PHPTemplateViewer implements TemplateViewerInterface
 {
     public function render(string $template, array $data = []): string
     {
+        
         // turn array of objects into individual variables unsing extract
         extract($data, EXTR_SKIP);
 

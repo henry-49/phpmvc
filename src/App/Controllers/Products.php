@@ -27,11 +27,12 @@ class Products extends Controller
 
         //$viewer = new Viewer;
 
-        echo $this->viewer->render("shared/header.php", [
-            "title" => "Product"
-        ]);
+        // echo $this->viewer->render("shared/header.php", [
+            
+        // ]);
 
-        echo  $this->viewer->render("Products/index.php", [
+        echo  $this->viewer->render("Products/index.mvc.php", [
+            "title" => "Products",
             "products" => $products,
             "total" => $this->model->getTotal()
         ]);

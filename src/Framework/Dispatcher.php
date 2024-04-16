@@ -51,7 +51,8 @@ class Dispatcher
 
         $controller_object->setRequest($request);
         
-        $controller_object->setViewer($this->container->get(PHPTemplateViewer::class));
+        //In the service We can specify in here which class we want to create.
+        $controller_object->setViewer($this->container->get(TemplateViewerInterface::class));
         
         // $controller = "App\Controllers\\" . ucwords($params["controller"]);
         // $action = $segments[2];

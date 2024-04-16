@@ -12,7 +12,8 @@ abstract class Controller
     // we need to change its visibility to protected.
     protected Request $request;
 
-    protected PHPTemplateViewer $viewer;
+    // contains the property of an object that implements this interface
+    protected TemplateViewerInterface $viewer;
     
     /**
      * setRequest
@@ -26,7 +27,7 @@ abstract class Controller
     }
 
     
-    public function setViewer(PHPTemplateViewer $viewer): void
+    public function setViewer(TemplateViewerInterface $viewer): void
     {
         $this->viewer = $viewer;
     }
