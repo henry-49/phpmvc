@@ -13,7 +13,7 @@ $container->set(App\Database::class, function () {
 // we've decoupled the dispatcher from a concrete class.
 $container->set(Framework\TemplateViewerInterface::class, function(){
     // And inside the closure, we'll return a new object of the PHP Template Viewer class.
-    return new Framework\PHPTemplateViewer;
+    return new Framework\MVCTemplateViewer;
 });
 
 return $container;  

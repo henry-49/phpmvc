@@ -19,4 +19,5 @@ class PHPTemplateViewer implements TemplateViewerInterface
       return ob_get_clean();
        //return file_get_contents("views/$template");
     }
+    
 }
