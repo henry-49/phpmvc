@@ -1,27 +1,23 @@
-<!DOCTYPE html>
-<html>
+{% extends "base.mvc.php" %}
 
-<head>
-    <title>{{ title }}</title>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
-</head>
+{% block title %}Products{% endblock %}
 
-<body>
-    <h1>Products</h1>
+{% block body %}
 
-    <a href="/products/new">New Product</a>
+<h1>Products</h1>
 
-    <p>Total: {{ total }}</p>
+<a href="/products/new">New Product</a>
 
-    {% foreach ($products as $product) : %}
+<p>Total: {{ total }}</p>
 
-    <h2>
-        <a href="/products/{{ product['id'] }}/show">
-            {{ product["name"] }}
-        </a>
-    </h2>
-    {% endforeach; %}
-</body>
+{% foreach ($products as $product) : %}
 
-</html>
+<h2>
+    <a href="/products/{{ product['id'] }}/show">
+        {{ product["name"] }}
+    </a>
+</h2>
+{% endforeach; %}
+
+
+{% endblock; %}
