@@ -20,8 +20,9 @@ class MVCTemplateViewer implements TemplateViewerInterface
             
             $block = $this->getBlocks($code);
 
-            print_r($block);
-            exit;
+            $code = $this->replaceYields($base, $block);
+
+            //exit;
         }
 
         $code = $this->replaceVariables($code);
@@ -38,32 +39,54 @@ class MVCTemplateViewer implements TemplateViewerInterface
         
         eval("?>$code");
 
-return ob_get_clean();
-//return file_get_contents("views/$template");
-}
-
-private function replaceVariables(string $code): string
-{
-return preg_replace("#{{\s*(\S+)\s*}}#", "<?= htmlspecialchars(\$$1) ?>", $code);
-}
-
-private function repalcePHP(string $code): string
-{
-// use the Pregreplace function to replace the custom syntax with PHP.
-return preg_replace("#{%\s*(.+)\s*%}#", "<?php $1 ?>", $code);
-
-}
-
-private function getBlocks(string $code): array {
-preg_match_all("#{% block (?<name>\w+) %}(?<content>.*?){% endblock %}#s", $code, $matches, PREG_SET_ORDER);
-
-    $blocks =[];
-
-    foreach ($matches as $match) {
-    // index
-    $blocks[$match["name"]] = $match["content"];// value
+        return ob_get_clean();
+        //return file_get_contents("views/$template");
     }
-    return $blocks;
+
+    private function replaceVariables(string $code): string
+    {
+        return preg_replace("#{{\s*(\S+)\s*}}#", "<?= htmlspecialchars(\$$1) ?>", $code);
+    }
+
+    private function repalcePHP(string $code): string
+    {
+        // use the Pregreplace function to replace the custom syntax with PHP.
+        return preg_replace("#{%\s*(.+)\s*%}#", "<?php $1 ?>", $code);
 
     }
+
+    private function getBlocks(string $code): array 
+    {
+        preg_match_all("#{% block (?<name>\w+) %}(?<content>.*?){% endblock %}#s", $code, $matches, PREG_SET_ORDER);
+
+        $blocks =[];
+
+        foreach ($matches as $match) {
+            // index                     value
+        $blocks[$match["name"]] = $match["content"];
+
+        }
+
+        return $blocks;
     }
+
+    private function replaceYields(string $code, array $blocks): string
+    {
+        // match all the yield statements, (?<name>\w+) shows the identifier is a sequence of one or more word characters
+        preg_match_all("#{% yield (?<name>\w+) %}#", $code, $matches, PREG_SET_ORDER);
+
+        foreach ($matches as $match){
+            $name = $match["name"];
+            // we are using the same name for the value of blocks
+            $block = $blocks[$name];
+
+            // setting the name of the content variable as the identifier
+            // parsing $code as replacement and $block as the subject
+          $code = preg_replace("#{% yield $name %}#", $block, $code);
+        }
+
+       // print_r($matches);
+
+        return $code;
+    }
+}
