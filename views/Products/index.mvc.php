@@ -17,7 +17,7 @@
         {{ product["name"] }}
     </a>
 </h2>
-{% endforeach; %}
+{% endforeach %}
 
 
-{% endblock; %}
+{% endblock %}
