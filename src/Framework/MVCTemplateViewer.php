@@ -45,7 +45,7 @@ class MVCTemplateViewer implements TemplateViewerInterface
 
     private function replaceVariables(string $code): string
     {
-        return preg_replace("#{{\s*(\S+)\s*}}#", "<?= htmlspecialchars(\$$1) ?>", $code);
+        return preg_replace("#{{\s*(\S+)\s*}}#", "<?= htmlspecialchars(\$$1 ?? '') ?>", $code);
     }
 
     private function repalcePHP(string $code): string
@@ -81,7 +81,7 @@ class MVCTemplateViewer implements TemplateViewerInterface
             $block = $blocks[$name];
 
             // setting the name of the content variable as the identifier
-            // parsing $code as replacement and $block as the subject
+            // parsing  $block as replacement and $code as the subject
           $code = preg_replace("#{% yield $name %}#", $block, $code);
         }
 

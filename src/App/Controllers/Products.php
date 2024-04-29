@@ -32,7 +32,6 @@ class Products extends Controller
         // ]);
 
         echo  $this->viewer->render("Products/index.mvc.php", [
-            "title" => "Products",
             "products" => $products,
             "total" => $this->model->getTotal()
         ]);
@@ -50,11 +49,11 @@ class Products extends Controller
 
        // $viewer = new Viewer;
 
-        echo $this->viewer->render("shared/header.php", [
-            "title" => "Show Product"
-        ]);
+        // echo $this->viewer->render("shared/header.php", [
+        //     "title" => "Show Product"
+        // ]);
         
-        echo  $this->viewer->render("Products/show.php",
+        echo  $this->viewer->render("Products/show.mvc.php",
             [
                 "product" => $product
             ]
@@ -105,11 +104,11 @@ class Products extends Controller
     public function new()
     {
         
-        echo $this->viewer->render("shared/header.php", [
-            "title" => "New Product"
-        ]);
+        // echo $this->viewer->render("shared/header.php", [
+        //     "title" => "New Product"
+        // ]);
 
-        echo  $this->viewer->render("Products/new.php");
+        echo  $this->viewer->render("Products/new.mvc.php");
     }
 
     public function create()
@@ -126,11 +125,11 @@ class Products extends Controller
                         
         }else{
 
-            echo $this->viewer->render("shared/header.php", [
-                "title" => "New Product"
-            ]);
+            // echo $this->viewer->render("shared/header.php", [
+            //     "title" => "New Product"
+            // ]);
 
-            echo  $this->viewer->render("Products/new.php", [
+            echo  $this->viewer->render("Products/new.mvc.php", [
                 "errors" => $this->model->getErrors(),
                 "product" => $data
             ]);
